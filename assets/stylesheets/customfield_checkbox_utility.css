@@ -1,26 +1,31 @@
-span.user_cf.check_box_group {
-    display: flex;
-    display: -webkit-flex;
-    flex-wrap: wrap; 
-    -webkit-flex-wrap: wrap; 
-  }
-  
-  span.user_cf.check_box_group label {
-    width: 150px;
-  }
-  
-  span.list_cf.check_box_group {
-    display: flex;
-    display: -webkit-flex;
-    flex-wrap: wrap; 
-    -webkit-flex-wrap: wrap; 
-  }
-  
-  span.list_cf.check_box_group label {
-    width: 150px;
-  }
- 
+span.enumeration_cf.check_box_group {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(33%, 1fr));
+  max-height: unset;
+}
 
-  span.cf_check_box_support {
-    margin-right: 1em;
-  }
+span.user_cf.check_box_group {
+  display: flex;
+  display: -webkit-flex;
+  flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+}
+
+span.user_cf.check_box_group label {
+  width: 150px;
+}
+
+span.list_cf.check_box_group {
+  display: flex;
+  display: -webkit-flex;
+  flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+}
+
+span.list_cf.check_box_group label {
+  width: 150px;
+}
+
+span.cf_check_box_support {
+  margin-right: 1em;
+}
