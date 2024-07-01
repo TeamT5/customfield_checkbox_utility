@@ -1,6 +1,22 @@
 repos:
+  - repo: https://github.com/google/yamlfmt
+    rev: v0.13.0
+    hooks:
+      - id: yamlfmt
+        name: yamlfmt
+        description: This hook uses github.com/google/yamlfmt to format yaml files. Requires golang >1.18 to be installed.
+        entry: yamlfmt
+        language: golang
+        types: [yaml]
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v4.0.0-alpha.8
     hooks:
       - id: prettier
-    files: \.(json|markdown|md|yaml|yml|js)$
+        files: \.(json|markdown|md|yaml|yml|js)$
+  - repo: local
+    hooks:
+      - id: rubyfmt
+        name: rubyfmt
+        language: docker_image
+        entry: shkm/rubyfmt:latest
+        args: ["-i", "--"]
