@@ -103,3 +103,50 @@ function cfcbGroupChanged(tagname) {
     }
   }
 }
+
+function adjustHeight() {
+  const checkBoxGroups = document.querySelectorAll(
+    ".enumeration_cf.check_box_group",
+  );
+  const increment = 32; // the height increment for each adjustment
+
+  checkBoxGroups.forEach((group) => {
+    let currentHeight = group.clientHeight;
+
+    function increaseHeight() {
+      if (group.scrollWidth > group.clientWidth) {
+        currentHeight += increment;
+        group.style.height = `${currentHeight}px`;
+        setTimeout(increaseHeight, 0); // adjust after ui update
+      }
+    }
+
+    function decreaseHeight() {
+      if (group.scrollWidth <= group.clientWidth && currentHeight > increment) {
+        currentHeight -= increment;
+        group.style.height = `${currentHeight}px`;
+        setTimeout(decreaseHeight, 0); // adjust after ui update
+      } else if (group.scrollWidth > group.clientWidth) {
+        // if the width is still larger than the container, increase height again
+        increaseHeight();
+      }
+    }
+
+    // start adjusting height
+    decreaseHeight();
+  });
+}
+
+function appendToFunction(fnName, callback) {
+  const originalFn = window[fnName];
+  window[fnName] = function (...args) {
+    originalFn.apply(this, args);
+    callback.apply(this, args);
+  };
+}
+
+// hook into the showAndScrollTo function
+appendToFunction("showAndScrollTo", adjustHeight);
+
+window.addEventListener("resize", adjustHeight);
+window.addEventListener("load", adjustHeight);

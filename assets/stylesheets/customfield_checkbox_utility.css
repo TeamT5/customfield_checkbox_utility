@@ -1,7 +1,14 @@
 span.enumeration_cf.check_box_group {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(33%, 1fr));
-  max-height: unset;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(auto-fill, minmax(1.5em, 1fr));
+  grid-template-columns: none;
+  height: 10px;
+  overflow-y: clip;
+}
+
+span.enumeration_cf.check_box_group label {
+  white-space: nowrap;
 }
 
 span.user_cf.check_box_group {
