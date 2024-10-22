@@ -105,35 +105,45 @@ function cfcbGroupChanged(tagname) {
 }
 
 function adjustHeight() {
-  const checkBoxGroups = document.querySelectorAll(
-    ".enumeration_cf.check_box_group",
-  );
-  const increment = 32; // the height increment for each adjustment
+  const checkBoxGroups = document.querySelectorAll(".check_box_group");
+  const increment = 32; // 每次調整的高度增量
 
   checkBoxGroups.forEach((group) => {
-    let currentHeight = group.clientHeight;
+    console.log(group);
 
-    function increaseHeight() {
+    const adjust = () => {
+      // 若橫向溢出調整高度
       if (group.scrollWidth > group.clientWidth) {
-        currentHeight += increment;
-        group.style.height = `${currentHeight}px`;
-        setTimeout(increaseHeight, 0); // adjust after ui update
+        console.log(
+          `scrollWidth: ${group.scrollWidth}, clientWidth: ${group.clientWidth}`,
+        );
+        console.log("Width overflowing");
+        group.style.height = `${group.clientHeight + increment}px`;
+        requestAnimationFrame(adjust);
+        return;
       }
-    }
 
-    function decreaseHeight() {
-      if (group.scrollWidth <= group.clientWidth && currentHeight > increment) {
-        currentHeight -= increment;
-        group.style.height = `${currentHeight}px`;
-        setTimeout(decreaseHeight, 0); // adjust after ui update
-      } else if (group.scrollWidth > group.clientWidth) {
-        // if the width is still larger than the container, increase height again
-        increaseHeight();
+      // if reach inhierent max-height, stop adjusting
+      max_height = parseInt(
+        window.getComputedStyle(group).getPropertyValue("max-height"),
+      );
+      // 垂直高度調整
+      if (
+        group.scrollHeight > group.clientHeight &&
+        max_height > group.clientHeight
+      ) {
+        console.log(
+          `clientHeight: ${group.clientHeight}, max-height: ${max_height}, scrollHeight: ${group.scrollHeight}`,
+        );
+        console.log("Height overflowing");
+        group.style.height = `${group.scrollHeight}px`;
+        requestAnimationFrame(adjust);
+        return;
       }
-    }
+    };
 
-    // start adjusting height
-    decreaseHeight();
+    // 開始調整高度
+    adjust();
   });
 }
 
